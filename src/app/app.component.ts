@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'demo-root',
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'demo';
+  langList = ['en', 'cz'];
+  currentLang = 'cz';
+
+  constructor(private translate: TranslateService) {
+    translate.addLangs(this.langList);
+    translate.setDefaultLang(this.currentLang);
+  }
+
+  changeLang(lang) {
+    this.translate.use(lang.target.value);
+  }
 }

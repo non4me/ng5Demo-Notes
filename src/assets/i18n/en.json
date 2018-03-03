@@ -1,0 +1,15 @@
+{
+  "APP": {
+    "CHANGE_LANGUAGE": "change language"
+  },
+  "NOTE_LIST": {
+    "NOTES": "Notes",
+    "ADD_NOTE": "Add note",
+    "ADD": "Add"
+  },
+  "NOTE_DETAIL": {
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "ARE_YOU_SURE": "Are you sure?"
+  }
+}

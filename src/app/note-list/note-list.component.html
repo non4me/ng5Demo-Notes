@@ -1,0 +1,39 @@
+<div class="demo-note-list" flex>
+  <mat-expansion-panel class="demo-note-list__add-note">
+    <mat-expansion-panel-header>
+      <mat-icon md-list-icon>add</mat-icon>
+      <strong>{{ 'NOTE_LIST.ADD_NOTE' | translate }}</strong>
+    </mat-expansion-panel-header>
+
+    <div class="demo-note-list__add-note-form">
+      <form novalidate [formGroup]="addNoteForm" [ngClass]="{'submitted': submitted}" (ngSubmit)="addNote()">
+        <mat-form-field>
+          <input matInput placeholder="{{ 'NOTE_LIST.ADD_NOTE' | translate }}" formControlName="note">
+        </mat-form-field>
+        <button mat-button (click)="addNote()">{{ 'NOTE_LIST.ADD' | translate }}</button>
+      </form>
+    </div>
+
+  </mat-expansion-panel>
+
+  <mat-card flex="50">
+    <mat-list>
+      <h2 md-subheader>{{ 'NOTE_LIST.NOTES' | translate }}</h2>
+      <mat-list-item *ngFor="let note of noteList" class="demo-note-list__note">
+        <a [routerLink]="[note.id]" *ngIf="note?.title">
+          <mat-icon md-list-icon>note</mat-icon>
+          {{note?.title}}
+        </a>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+
+    </mat-list>
+  </mat-card>
+
+  <mat-divider [vertical]="true"></mat-divider>
+
+  <mat-card flex="50">
+    <router-outlet></router-outlet>
+  </mat-card>
+
+</div>
