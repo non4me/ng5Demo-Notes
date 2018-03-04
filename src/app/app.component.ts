@@ -16,6 +16,6 @@ export class AppComponent {
   }
 
   changeLang(lang) {
-    this.translate.use(lang.target.value);
+    this.translate.use(lang.value);
   }
 }

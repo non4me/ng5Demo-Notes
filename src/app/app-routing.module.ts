@@ -19,7 +19,8 @@ const routes: Routes = [
         component: NoteDetailComponent
       }
     ]
-  }
+  },
+  { path: '**', redirectTo: 'notes' }
 ];
 
 @NgModule({

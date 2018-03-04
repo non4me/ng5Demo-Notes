@@ -12,6 +12,7 @@ export class NoteListComponent implements OnInit, OnDestroy {
 
   noteList = [];
   addNoteForm: FormGroup;
+  showAddForm = false;
   submitted = false;
 
   private unsubscribeHelper = [];
@@ -28,27 +29,31 @@ export class NoteListComponent implements OnInit, OnDestroy {
       this.noteService.getNoteList()
         .subscribe(serverNoteList => {
           this.noteList = serverNoteList as Note[];
-          console.log(this.noteList);
         })
     );
+
+    this.noteService.fetchNoteList();
   }
 
   addNote() {
     this.submitted = true;
 
-    if(this.addNoteForm.status === 'VALID') {
+    if (this.addNoteForm.status === 'VALID') {
       const newNote = this.addNoteForm.value;
 
       this.unsubscribeHelper.push(
         this.noteService.createNote(newNote).subscribe(response => {
-          console.log('Add note: ', response);
 
-          if(response && response.id) {
+          if (response && response.id) {
             this.addNoteForm.reset();
+            this.showAddForm = false;
+            this.submitted = false;
+
+            this.noteService.fetchNoteList();
           }
 
         })
-      )
+      );
     }
   }
 

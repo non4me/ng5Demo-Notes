@@ -55,7 +55,6 @@ export class SpinnerService {
    * @param {boolean} state
    */
   private setState(): void {
-    console.log('sppiner state', this.counter);
     this.notifier$.next(this.counter);
   }
 }

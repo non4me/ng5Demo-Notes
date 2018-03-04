@@ -1,17 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="mat-app-background basic-container">
-  <demo-spinner></demo-spinner>
-  <mat-card>
-    <section class="mat-typography">
-      <mat-card-title>Demo</mat-card-title>
+<demo-spinner></demo-spinner>
+<div class="row wrap"  fxLayoutAlign="start center"  fxLayoutGap="20px">
+  <div fxFlexFill>
+      <mat-form-field fxLayoutAlign="end">
+        <mat-select #langSelect (change)="changeLang($event)"
+                    [(value)]="currentLang"
+                    placeholder="{{ 'APP.CHANGE_LANGUAGE' | translate }}">
+          <mat-option *ngFor="let lang of langList" [value]="lang" >{{ lang.toUpperCase() }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <mat-select #langSelect (change)="changeLang($event)">
-        <mat-option *ngFor="let lang of langList" [value]="lang" >{{ lang }}</mat-option>
-      </mat-select>
-      {{ 'APP.CHANGE_LANGUAGE' | translate }}
+
 
       <router-outlet></router-outlet>
 
-    </section>
-  </mat-card>
+  </div>
 </div>

@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -96,7 +97,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule
   ]
 })
-export class MaterialModules {}
+export class MaterialModules {
+}
 
 @NgModule({
   declarations: [
@@ -116,7 +118,8 @@ export class MaterialModules {}
         deps: [HttpClient]
       }
     }),
-    MaterialModules
+    MaterialModules,
+    FlexLayoutModule
   ],
   providers: [
     ErrorHandlerService,

@@ -1,18 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse, HttpEventType} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {map, catchError} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {map, catchError, tap} from 'rxjs/operators';
 
 import {environment} from '../../../../../environments/environment';
-import {ErrorHandlerService} from '../../error-handler/error-handler.service'
+import {ErrorHandlerService} from '../../error-handler/error-handler.service';
+
 
 export interface Note {
-  id: number,
-  title: string
+  id: number;
+  title: string;
 }
 
 @Injectable()
 export class NotesService {
+
+  noteList$ = new BehaviorSubject(null);
+
   private restServer: string = environment.restServer;
   private NOTES = '/notes';
 
@@ -26,10 +31,19 @@ export class NotesService {
    * @return  {Observable<Note[]>}
    */
   getNoteList(): Observable<Note[]> {
-    return this.http.get<Note[]>(`${this.restServer}${this.NOTES}`)
+    return this.noteList$.asObservable();
+  }
+
+  /**
+   * @description
+   * Fetch a list of notes from the restServer
+   */
+  fetchNoteList() {
+    this.http.get<Note[]>(`${this.restServer}${this.NOTES}`)
       .pipe(
         catchError(error => this.errorHandler.processServerError(error))
-      );
+      )
+      .subscribe(response => this.noteList$.next(response));
   }
 
   /**
