@@ -33,11 +33,6 @@ describe('SpinnerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
-  xit('should be initialize with state = TRUE', () => {
-    expect(component.state).toBe(true);
-  });
-
   xit('should show and hide spinner', () => {
     const spinner = fixture.nativeElement.querySelector('.dispo-spinner');
     expect(spinner).toBeTruthy();

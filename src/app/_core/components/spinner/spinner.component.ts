@@ -28,11 +28,7 @@ export class SpinnerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.unsubscribeHelper.push(
       this.spinnerService.getState()
-      .subscribe((state) => {
-        setTimeout(() => {
-          return this.state = !!state
-        });
-      })
+        .subscribe(state => this.state = !!state)
     );
   }
 

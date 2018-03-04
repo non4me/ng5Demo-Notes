@@ -1,31 +1,63 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import {NO_ERRORS_SCHEMA, Injector} from '@angular/core';
+import {TestBed, getTestBed, async, inject} from '@angular/core/testing';
+import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import {RouterTestingModule} from '@angular/router/testing';
+
+import {AppComponent} from './app.component';
+import {Observable} from 'rxjs/Observable';
+import SpyObj = jasmine.SpyObj;
+
+class FakeLoader implements TranslateLoader {
+  getTranslation(lang: string): Observable<any> {
+    return Observable.of({});
+  }
+}
+
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let fixture;
+  let component;
+  let translate: TranslateService;
+  let injector:  Injector;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: {provide: TranslateLoader, useClass: FakeLoader},
+        })
+      ],
+      providers: [
       ],
       declarations: [
         AppComponent
       ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
-  }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'demo'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('demo');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+
+    injector = getTestBed();
+    translate = injector.get(TranslateService);
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to demo!');
+  });
+
+  it('should create the app', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it(`should have as currentLang 'cz'`, () => {
+    expect(component.currentLang).toEqual('cz');
+  });
+
+
+  it(`#changeLang should change current Language`, async(() => {
+
+    component.changeLang({value: 'cz'});
+    expect(component.translate.currentLang).toEqual('cz');
+
+    component.changeLang({value: 'en'});
+    expect(component.translate.currentLang).toEqual('en');
   }));
+
 });
