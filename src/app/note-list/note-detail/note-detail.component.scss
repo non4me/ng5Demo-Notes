@@ -1,0 +1,9 @@
+:host{
+  .demo-note-detail {
+    &__edit-note {
+      min-width: 250px;
+      max-width: 500px;
+      width: 100%;
+    }
+  }
+}

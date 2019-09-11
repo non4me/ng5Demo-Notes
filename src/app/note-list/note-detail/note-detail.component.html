@@ -1,0 +1,26 @@
+<div class="demo-note-detail">
+  <h1>ID: {{id}}</h1>
+  <div *ngIf="isEdit">
+    <form novalidate [formGroup]="addNoteForm" [ngClass]="{'submitted': submitted}">
+      <mat-form-field class="demo-note-detail__edit-note">
+        <textarea matInput formControlName="note"></textarea>
+      </mat-form-field>
+      <button mat-button (click)="updateNote()">{{ 'NOTE_DETAIL.EDIT' | translate }}</button>
+    </form>
+  </div>
+  <div *ngIf="!isEdit">
+    <h2>{{note?.title}}</h2>
+  </div>
+
+
+  <div fxFlexAlign="end">
+    <button mat-mini-fab (click)="deleteNote()" title="{{ 'NOTE_DETAIL.DELETE' | translate }}">
+      <mat-icon md-list-icon>delete</mat-icon>
+    </button>
+
+    <button mat-mini-fab (click)="isEdit = !isEdit" title="{{ 'NOTE_DETAIL.EDIT' | translate }}">
+      <mat-icon md-list-icon>edit</mat-icon>
+    </button>
+  </div>
+
+</div>
