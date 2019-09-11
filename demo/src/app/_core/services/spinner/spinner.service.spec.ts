@@ -14,7 +14,7 @@ describe('SpinnerService', () => {
       expect(service).toBeTruthy();
     }));
 
-  it('method show() should show spinner',
+  it('#show() should show spinner',
     inject([SpinnerService], (service: SpinnerService) => {
       service.show();
       service.getState().subscribe((state) => {
@@ -22,7 +22,7 @@ describe('SpinnerService', () => {
       });
     }));
 
-  it('method hide() should hide spinner',
+  it('#hide() should hide spinner',
     inject([SpinnerService], (service: SpinnerService) => {
       service.show();
       service.hide();

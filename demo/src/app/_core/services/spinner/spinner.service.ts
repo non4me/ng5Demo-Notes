@@ -1,6 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import 'rxjs/add/observable/of';
 
 /**
@@ -16,29 +15,15 @@ export class SpinnerService {
   private counter = 0;
   private notifier$ = new BehaviorSubject<number>(0);
 
-  /**
-   * @description
-   * Function which returns actual state
-   *
-   * @returns {Observable<Boolean>} - actual state Observable object (subscribers of this object are notified about state change)
-   */
   getState(): Observable<number> {
     return this.notifier$.asObservable();
   }
 
-  /**
-   * @description
-   * Show spinner and up counter
-   */
   show() {
     this.counter += 1;
-    this.setState()
+    this.setState();
   }
 
-  /**
-   * @description
-   * Hide spinner if counter equal null
-   */
   hide() {
     this.counter -= 1;
 
@@ -48,12 +33,6 @@ export class SpinnerService {
     }
   }
 
-  /**
-   * @description
-   * Update Observable object
-   *
-   * @param {boolean} state
-   */
   private setState(): void {
     this.notifier$.next(this.counter);
   }

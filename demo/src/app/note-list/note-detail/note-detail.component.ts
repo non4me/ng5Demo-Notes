@@ -71,11 +71,10 @@ export class NoteDetailComponent implements OnInit, OnDestroy {
 
   deleteNote() {
     this.unsubscribeHelper.push(
-      this.noteService.deleteNote(+this.id).subscribe(result => console.log(result))
+      this.noteService.deleteNote(+this.id).then(result => console.log(result))
     );
   }
 
   ngOnDestroy() {
-    this.unsubscribeHelper.forEach(service => service.unsubscribe());
   }
 }
