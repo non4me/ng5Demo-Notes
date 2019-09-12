@@ -1,0 +1,16 @@
+{
+  "APP": {
+    "CHANGE_LANGUAGE": "Změnit jazyk"
+  },
+  "NOTE_LIST": {
+    "NOTES": "Poznámky",
+    "ADD_NOTE": "Přidat poznámku",
+    "ADD": "Přidat"
+  },
+  "NOTE_DETAIL": {
+    "EDIT": "Opravit",
+    "DELETE": "Odstranit",
+    "SAVE": "Uložit",
+    "ARE_YOU_SURE": "Are you sure?"
+  }
+}
