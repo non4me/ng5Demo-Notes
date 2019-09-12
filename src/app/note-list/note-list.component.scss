@@ -1,7 +1,15 @@
 :host {
   .demo-note-list {
+    h2 {
+      color: darkgray;
+    }
+
     &__add-note-input {
       width: 100%;
+    }
+
+    &__icon {
+      color: darkgray;
     }
   }
 }

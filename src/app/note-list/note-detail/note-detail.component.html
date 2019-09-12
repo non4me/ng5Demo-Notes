@@ -1,11 +1,10 @@
-<div class="demo-note-detail">
-  <h1>ID: {{id}}</h1>
+<div class="demo-note-detail" fxLayout="column" fxFill>
+  <h3>ID: {{id}}</h3>
   <div *ngIf="isEdit">
     <form novalidate [formGroup]="addNoteForm" [ngClass]="{'submitted': submitted}">
       <mat-form-field class="demo-note-detail__edit-note">
         <textarea matInput formControlName="note"></textarea>
       </mat-form-field>
-      <button mat-button (click)="updateNote()">{{ 'NOTE_DETAIL.EDIT' | translate }}</button>
     </form>
   </div>
   <div *ngIf="!isEdit">
@@ -13,13 +12,17 @@
   </div>
 
 
-  <div fxFlexAlign="end">
-    <button mat-mini-fab (click)="deleteNote()" title="{{ 'NOTE_DETAIL.DELETE' | translate }}">
-      <mat-icon md-list-icon>delete</mat-icon>
+  <div fxFlex="*" fxLayoutAlign="start end" fxLayoutGap="20px">
+    <button mat-stroked-button color="warn" (click)="deleteNote()"  *ngIf="!isEdit">
+      {{ 'NOTE_DETAIL.DELETE' | translate }}
     </button>
 
-    <button mat-mini-fab (click)="isEdit = !isEdit" title="{{ 'NOTE_DETAIL.EDIT' | translate }}">
-      <mat-icon md-list-icon>edit</mat-icon>
+    <button mat-stroked-button (click)="isEdit = !isEdit"  *ngIf="!isEdit">
+      {{ 'NOTE_DETAIL.EDIT' | translate }}
+    </button>
+
+    <button mat-stroked-button (click)="updateNote()" *ngIf="isEdit">
+      {{ 'NOTE_DETAIL.SAVE' | translate }}
     </button>
   </div>
 

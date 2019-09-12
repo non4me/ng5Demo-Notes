@@ -1,103 +1,24 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-} from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {NoteListComponent} from './note-list/note-list.component';
-import {NoteDetailComponent} from './note-list/note-detail/note-detail.component';
-import {SpinnerComponent} from './_core/components/spinner/spinner.component';
-import {
-  ErrorHandlerService,
-  NotesService,
-  SpinnerService,
-  InterceptorSpinner
-} from 'app/_core/services';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+
+import { NotesService } from '@_core/services/_rest/notes/notes.service';
+import { SpinnerService } from '@_core/services/spinner/spinner.service';
+import { SpinnerComponent } from '@_core/components/spinner/spinner.component';
+import { ErrorHandlerService } from '@_core/services/error-handler/error-handler.service';
+import { InterceptorSpinner } from '@_core/services/_rest/interceptors/interceptor-spinner';
+import { NoteDetailComponent } from './note-list/note-detail/note-detail.component';
+import { NoteListComponent } from './note-list/note-list.component';
+import { AppRoutingModule } from './app-routing.module';
+import { MaterialModules } from './material.module';
+import { AppComponent } from './app.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
-
-@NgModule({
-  exports: [
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    FormsModule
-  ]
-})
-export class MaterialModules {
 }
 
 @NgModule({
@@ -109,6 +30,7 @@ export class MaterialModules {
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forRoot({

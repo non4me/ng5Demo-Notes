@@ -1,16 +1,13 @@
 <div class="demo-note-list" flex>
 
-
   <mat-card fxFlex="30">
     <div fxLayoutAlign="end">
-      <button mat-mini-fab
-              (click)="showAddForm = !showAddForm"
-              title="{{ 'NOTE_LIST.ADD_NOTE' | translate }}">
-        <mat-icon md-list-icon>add</mat-icon>
+      <button mat-stroked-button (click)="showAddForm = !showAddForm">
+        {{ 'NOTE_LIST.ADD' | translate }}
       </button>
     </div>
 
-    <div class="demo-note-list__add-note-form" *ngIf="showAddForm">
+    <div class="demo-note-list__add-note-form" *ngIf="showAddForm" fxLayoutGap="20px">
       <form novalidate [formGroup]="addNoteForm" [ngClass]="{'submitted': submitted}" (ngSubmit)="addNote()">
         <mat-form-field class="demo-note-list__add-note-input">
           <textarea matInput placeholder="{{ 'NOTE_LIST.ADD_NOTE' | translate }}" formControlName="note"></textarea>
@@ -25,10 +22,15 @@
     <mat-list>
       <h2 md-subheader>{{ 'NOTE_LIST.NOTES' | translate }}</h2>
       <mat-list-item *ngFor="let note of noteList" class="demo-note-list__note">
-        <mat-icon md-list-icon>note</mat-icon>
-        <a [routerLink]="[note.id]" *ngIf="note?.title">
-          {{note?.title}}
-        </a>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <div>
+            <mat-icon class="demo-note-list__icon">notes</mat-icon>
+          </div>
+          <div>
+            <a [routerLink]="[note.id]" *ngIf="note?.title">{{note?.title}}</a>
+          </div>
+        </div>
+
         <mat-divider></mat-divider>
       </mat-list-item>
 

@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import 'rxjs/add/observable/of';
 
 /**
  * @description
  * This service provides ability to manipulate with spinner state
- *
- * @external Injectable, Observable
- * @external of
  */
 @Injectable()
 export class SpinnerService {

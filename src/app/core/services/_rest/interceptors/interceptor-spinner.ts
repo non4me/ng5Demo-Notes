@@ -1,16 +1,9 @@
-import {Injectable} from '@angular/core';
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse
-} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
-import {tap, catchError} from 'rxjs/operators';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
 
-import {SpinnerService} from '../../spinner/spinner.service';
+import { SpinnerService } from '@_core/services/spinner/spinner.service';
 
 @Injectable()
 export class InterceptorSpinner implements HttpInterceptor {
@@ -30,7 +23,7 @@ export class InterceptorSpinner implements HttpInterceptor {
       catchError((err) => {
         this.spinner.hide();
 
-        return Observable.throw(err);
+        return throwError(err);
       })
     );
   }

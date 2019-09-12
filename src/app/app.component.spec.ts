@@ -1,34 +1,27 @@
-import {NO_ERRORS_SCHEMA, Injector} from '@angular/core';
-import {TestBed, getTestBed, async, inject} from '@angular/core/testing';
-import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
-import {RouterTestingModule} from '@angular/router/testing';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { async, getTestBed, TestBed } from '@angular/core/testing';
+import { Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
-import {AppComponent} from './app.component';
-import {Observable} from 'rxjs/Observable';
-import SpyObj = jasmine.SpyObj;
+import { AppComponent } from './app.component';
 
-class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
-    return Observable.of({});
-  }
-}
 
 describe('AppComponent', () => {
   let fixture;
   let component;
   let translate: TranslateService;
-  let injector:  Injector;
+  let injector: Injector;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         TranslateModule.forRoot({
-          loader: {provide: TranslateLoader, useClass: FakeLoader},
+          loader: { provide: TranslateLoader, useValue: {getTranslation: () => of({})} }
         })
       ],
-      providers: [
-      ],
+      providers: [],
       declarations: [
         AppComponent
       ],
@@ -53,10 +46,10 @@ describe('AppComponent', () => {
 
   it(`#changeLang should change current Language`, async(() => {
 
-    component.changeLang({value: 'cz'});
+    component.changeLang({ value: 'cz' });
     expect(component.translate.currentLang).toEqual('cz');
 
-    component.changeLang({value: 'en'});
+    component.changeLang({ value: 'en' });
     expect(component.translate.currentLang).toEqual('en');
   }));
 

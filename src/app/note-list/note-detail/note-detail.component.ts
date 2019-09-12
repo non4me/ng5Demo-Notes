@@ -1,10 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import 'rxjs/add/operator/switchMap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ActivatedRoute } from '@angular/router';
 
-import {NotesService, Note} from '../../_core/services';
-import {Observable} from 'rxjs/Observable';
+import { Note, NotesService } from '@_core/services/_rest/notes/notes.service';
 
 @Component({
   selector: 'demo-note-detail',
@@ -19,8 +18,6 @@ export class NoteDetailComponent implements OnInit, OnDestroy {
   submitted = false;
   isEdit = false;
 
-  private unsubscribeHelper = [];
-
   constructor(private route: ActivatedRoute, private noteService: NotesService, private fb: FormBuilder) {
   }
 
@@ -29,22 +26,15 @@ export class NoteDetailComponent implements OnInit, OnDestroy {
       note: ['', [Validators.required]]
     });
 
-    this.unsubscribeHelper.push(
-      this.route.paramMap
-        .switchMap((params: ParamMap) => {
-            this.id = params.get('id');
-
-            return Observable.of(this.id);
-          }
-        )
-        .switchMap(noteId => {
-          return this.noteService.getNote(+noteId);
-        })
-        .subscribe((note: Note) => {
+    this.route.paramMap
+      .pipe(untilDestroyed(this))
+      .subscribe(params => {
+        this.id = params.get('id');
+        this.noteService.getNote(this.id).then((note: Note) => {
           this.note = note;
           this.addNoteForm.get('note').setValue(note.title);
-        })
-    );
+        });
+      });
   }
 
   updateNote() {
@@ -53,26 +43,22 @@ export class NoteDetailComponent implements OnInit, OnDestroy {
     if (this.addNoteForm.status === 'VALID') {
       this.note.title = this.addNoteForm.value.note;
 
-      this.unsubscribeHelper.push(
-        this.noteService.updateNote(+this.id, this.note.title).subscribe(response => {
+      this.noteService.updateNote(+this.id, this.note.title).then(response => {
 
-          if (response && response.id) {
-            this.addNoteForm.reset();
-            this.isEdit = false;
-            this.submitted = false;
+        if (response && response.id) {
+          this.addNoteForm.reset();
+          this.isEdit = false;
+          this.submitted = false;
 
-            this.noteService.fetchNoteList();
-          }
+          this.noteService.fetchNoteList();
+        }
 
-        })
-      );
+      })
     }
   }
 
   deleteNote() {
-    this.unsubscribeHelper.push(
-      this.noteService.deleteNote(+this.id).then(result => console.log(result))
-    );
+    this.noteService.deleteNote(+this.id);
   }
 
   ngOnDestroy() {

@@ -8,8 +8,9 @@
     "ADD": "Přidat"
   },
   "NOTE_DETAIL": {
-    "EDIT": "Upravit",
+    "EDIT": "Opravit",
     "DELETE": "Odstranit",
+    "SAVE": "Uložit",
     "ARE_YOU_SURE": "Are you sure?"
   }
 }

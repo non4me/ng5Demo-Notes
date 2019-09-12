@@ -1,16 +1,12 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
-import {SpinnerService} from '../../services';
+import { SpinnerService } from '@_core/services/spinner/spinner.service';
 
 /**
  * @description
  * This component provides ability to show spinner which indicates that the application is working
  * (f.e. loading data from web service).
- *
- * @external Component, SpinnerService
- *
- * @external forEach
- * @see {@link https://lodash.com/docs}
  */
 @Component({
   selector: 'demo-spinner',
@@ -19,21 +15,15 @@ import {SpinnerService} from '../../services';
 })
 export class SpinnerComponent implements OnInit, OnDestroy {
 
-  state: Boolean;
-  private unsubscribeHelper = [];
+  showSpinner = false;
 
   constructor(private spinnerService: SpinnerService) {
   }
 
   ngOnInit() {
-    this.unsubscribeHelper.push(
-      this.spinnerService.getState()
-        .subscribe(state => this.state = !!state)
-    );
+    this.spinnerService.getState().pipe(untilDestroyed(this)).subscribe(state => this.showSpinner = !!state);
   }
 
-
   ngOnDestroy() {
-    this.unsubscribeHelper.forEach(service => service.unsubscribe());
   }
 }

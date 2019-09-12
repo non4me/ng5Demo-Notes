@@ -1,23 +1,24 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
-import {SpinnerComponent} from './spinner.component';
-import {SpinnerService} from '../../services';
+import { SpinnerService } from '@_core/services/spinner/spinner.service';
+import { SpinnerComponent } from './spinner.component';
 
 describe('SpinnerComponent', () => {
   let component: SpinnerComponent;
   let fixture: ComponentFixture<SpinnerComponent>;
 
   const fakeSpinnerService = {
-    getState: () => Observable.of(true)
+    getState: () => {
+      return of(true);
+    }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SpinnerComponent],
       providers: [
-        {provide: SpinnerService, useValue: fakeSpinnerService}
+        { provide: SpinnerService, useValue: fakeSpinnerService }
       ]
     })
       .compileComponents();
@@ -33,20 +34,11 @@ describe('SpinnerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('should show and hide spinner', () => {
+  it('should show and hide spinner', () => {
     const spinner = fixture.nativeElement.querySelector('.dispo-spinner');
     expect(spinner).toBeTruthy();
-    component.state = false;
+    component.showSpinner = false;
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.dispo-spinner')).toBeNull();
-  });
-
-  it('should use unsubscribe method after component is destroyed', () => {
-    let unsubscribed = false;
-    component['unsubscribeHelper'].push({
-      unsubscribe: () => {unsubscribed = true}
-    });
-    fixture.destroy();
-    expect(unsubscribed).toBe(true);
   });
 });

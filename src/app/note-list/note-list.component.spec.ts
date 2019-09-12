@@ -1,11 +1,12 @@
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {ReactiveFormsModule} from '@angular/forms';
-import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs/internal/observable/of';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import {NotesService} from 'app/_core/services';
-import {NoteListComponent} from './note-list.component';
-import {Observable} from 'rxjs/Observable';
+
+import { NotesService } from '@_core/services/_rest/notes/notes.service';
+import { NoteListComponent } from './note-list.component';
 
 class FakeNotesService {
   fetchNoteList() {
@@ -13,17 +14,11 @@ class FakeNotesService {
   }
 
   getNoteList(key: any): any {
-    return Observable.of(key);
+    return of(key);
   }
 
   createNote(key: any): any {
-    return Observable.of(key);
-  }
-}
-
-class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
-    return Observable.of({});
+    return of(key);
   }
 }
 
@@ -36,7 +31,7 @@ describe('NoteListComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot({
-          loader: {provide: TranslateLoader, useClass: FakeLoader},
+          loader: { provide: TranslateLoader, useValue: {getTranslation: () => of({})} }
         }),
         ReactiveFormsModule
       ],

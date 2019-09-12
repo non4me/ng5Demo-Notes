@@ -2,7 +2,7 @@
 <div class="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
   <div fxFlexFill>
     <mat-form-field fxLayoutAlign="end">
-      <mat-select #langSelect (change)="changeLang($event)"
+      <mat-select (selectionChange)="changeLang($event)"
                   [(value)]="currentLang"
                   placeholder="{{ 'APP.CHANGE_LANGUAGE' | translate }}">
         <mat-option *ngFor="let lang of langList" [value]="lang">{{ lang.toUpperCase() }}</mat-option>

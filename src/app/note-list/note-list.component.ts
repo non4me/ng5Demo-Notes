@@ -1,7 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
-import {NotesService, Note} from '../_core/services';
+import { Note, NotesService } from '@_core/services/_rest/notes/notes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'demo-note-list',
@@ -15,9 +17,10 @@ export class NoteListComponent implements OnInit, OnDestroy {
   showAddForm = false;
   submitted = false;
 
-  private unsubscribeHelper = [];
-
-  constructor(private noteService: NotesService, private fb: FormBuilder) {
+  constructor(
+    private readonly noteService: NotesService,
+    private readonly router: Router,
+    private readonly fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -25,12 +28,15 @@ export class NoteListComponent implements OnInit, OnDestroy {
       note: ['', [Validators.required]]
     });
 
-    this.unsubscribeHelper.push(
-      this.noteService.getNoteList()
-        .subscribe(serverNoteList => {
-          this.noteList = serverNoteList as Note[];
-        })
-    );
+    this.noteService.getNoteList()
+      .pipe(untilDestroyed(this))
+      .subscribe(serverNoteList => {
+        this.noteList = serverNoteList as Note[];
+
+        if (Array.isArray(serverNoteList) && serverNoteList.length) {
+          this.router.navigate(['notes', serverNoteList[0].id]);
+        }
+      });
 
     this.noteService.fetchNoteList();
   }
@@ -41,23 +47,19 @@ export class NoteListComponent implements OnInit, OnDestroy {
     if (this.addNoteForm.status === 'VALID') {
       const newNote = this.addNoteForm.value;
 
-      this.unsubscribeHelper.push(
-        this.noteService.createNote(newNote).subscribe(response => {
+      this.noteService.createNote(newNote).then(response => {
 
-          if (response && response.id) {
-            this.addNoteForm.reset();
-            this.showAddForm = false;
-            this.submitted = false;
+        if (response && response.id) {
+          this.addNoteForm.reset();
+          this.showAddForm = false;
+          this.submitted = false;
 
-            this.noteService.fetchNoteList();
-          }
-
-        })
-      );
+          this.noteService.fetchNoteList();
+        }
+      });
     }
   }
 
   ngOnDestroy() {
-    this.unsubscribeHelper.forEach(service => service.unsubscribe());
   }
 }
