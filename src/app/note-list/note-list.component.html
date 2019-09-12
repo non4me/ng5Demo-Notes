@@ -1,7 +1,7 @@
 <div class="demo-note-list" flex>
 
   <mat-card fxFlex="30">
-    <div fxLayoutAlign="end">
+    <div fxLayoutAlign="end"  *ngIf="!showAddForm">
       <button mat-stroked-button (click)="showAddForm = !showAddForm">
         {{ 'NOTE_LIST.ADD' | translate }}
       </button>
@@ -13,8 +13,8 @@
           <textarea matInput placeholder="{{ 'NOTE_LIST.ADD_NOTE' | translate }}" formControlName="note"></textarea>
         </mat-form-field>
       </form>
-      <div fxLayoutAlign="end">
-        <button mat-button (click)="addNote()">{{ 'NOTE_LIST.ADD' | translate }}</button>
+      <div fxLayoutAlign="end"  (click)="showAddForm = !showAddForm">
+        <button mat-stroked-button (click)="addNote()">{{ 'NOTE_LIST.ADD' | translate }}</button>
       </div>
     </div>
 
