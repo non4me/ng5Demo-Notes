@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
+import { MaterialModule } from './material.module';
 
 
 describe('AppComponent', () => {
@@ -16,6 +17,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
+        MaterialModule,
         RouterTestingModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useValue: {getTranslation: () => of({})} }

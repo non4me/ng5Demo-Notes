@@ -35,10 +35,10 @@ describe('SpinnerComponent', () => {
   });
 
   it('should show and hide spinner', () => {
-    const spinner = fixture.nativeElement.querySelector('.dispo-spinner');
+    const spinner = fixture.nativeElement.querySelector('.demo-spinner');
     expect(spinner).toBeTruthy();
     component.showSpinner = false;
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.dispo-spinner')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.demo-spinner')).toBeNull();
   });
 });

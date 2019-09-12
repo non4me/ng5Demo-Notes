@@ -76,5 +76,5 @@ import {
     FormsModule
   ]
 })
-export class MaterialModules {
+export class MaterialModule {
 }

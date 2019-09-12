@@ -7,6 +7,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NotesService } from '@_core/services/_rest/notes/notes.service';
 import { NoteListComponent } from './note-list.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 class FakeNotesService {
   fetchNoteList() {
@@ -30,6 +31,7 @@ describe('NoteListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useValue: {getTranslation: () => of({})} }
         }),

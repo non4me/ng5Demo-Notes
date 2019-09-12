@@ -7,7 +7,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NotesService } from '@_core/services/_rest/notes/notes.service';
 import { NoteDetailComponent } from './note-detail.component';
-;
 
 describe('NoteDetailComponent', () => {
   let component: NoteDetailComponent;
@@ -18,12 +17,12 @@ describe('NoteDetailComponent', () => {
       imports: [
         ReactiveFormsModule,
         TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useValue: {getTranslation: () => of({})} }
+          loader: { provide: TranslateLoader, useValue: { getTranslation: () => of({}) } }
         }),
         RouterTestingModule
       ],
       providers: [
-        {provide: NotesService, useValue: {}}
+        { provide: NotesService, useValue: { getNote: () => of({}).toPromise() } }
       ],
       declarations: [NoteDetailComponent],
       schemas: [NO_ERRORS_SCHEMA]

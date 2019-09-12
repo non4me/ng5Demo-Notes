@@ -14,7 +14,7 @@ import { InterceptorSpinner } from '@_core/services/_rest/interceptors/intercept
 import { NoteDetailComponent } from './note-list/note-detail/note-detail.component';
 import { NoteListComponent } from './note-list/note-list.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MaterialModules } from './material.module';
+import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,7 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    MaterialModules,
+    MaterialModule,
     FlexLayoutModule
   ],
   providers: [

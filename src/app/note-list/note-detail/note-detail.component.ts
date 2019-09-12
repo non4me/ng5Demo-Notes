@@ -53,7 +53,7 @@ export class NoteDetailComponent implements OnInit, OnDestroy {
           this.noteService.fetchNoteList();
         }
 
-      })
+      });
     }
   }
 
